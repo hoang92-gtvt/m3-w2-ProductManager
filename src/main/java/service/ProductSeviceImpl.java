@@ -50,6 +50,11 @@ public class ProductSeviceImpl implements ProductService{
         return null;
     }
 
+    @Override
+    public Product getProductByIndex(int index){
+        return productList.get(index);
+
+    }
 
 
 

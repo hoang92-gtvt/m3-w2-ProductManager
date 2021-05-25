@@ -15,5 +15,6 @@ public interface ProductService {
 
     Product findByName(String name);
 
+    Product getProductByIndex(int index);
 
 }

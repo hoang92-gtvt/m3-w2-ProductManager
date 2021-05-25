@@ -15,6 +15,7 @@
     <div>
         <h1>Form tạo mới một sản phẩm</h1>
         <a href="/products?action=home">Quay về trang chủ</a>
+
         <form method="post">
             <span>STT: <input name="id" type="text" size="15"/></span> <br>
             <span>Tên: <input name="name" type="text" size="15"/></span> <br>

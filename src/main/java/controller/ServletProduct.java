@@ -25,10 +25,12 @@ public class ServletProduct extends HttpServlet {
                  showCreatProduct(request,response);
                  break;
              case "update":
+                 showUpdateProduct(request, response);
+
                  break;
              case "delete" :
                  break;
-             case "find" :
+             case "detail" :
                  break;
              default :
                  showAllProduct(request, response);
@@ -38,10 +40,38 @@ public class ServletProduct extends HttpServlet {
 //        System.out.println("inphuongthuc get");
     }
 
+    private void showUpdateProduct(HttpServletRequest request, HttpServletResponse response) {
+        RequestDispatcher dispatcher;
+
+        int index = Integer.parseInt(request.getParameter("index"));
+        Product product = productService.getProductByIndex(index);
+
+        request.setAttribute("product",product);
+        request.setAttribute("index", index);
+
+        if(product== null){
+            dispatcher= request.getRequestDispatcher("error-404.jsp");
+        } else {
+            dispatcher = request.getRequestDispatcher("/products/formEdit.jsp");
+        }
+
+
+        try {
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     private void showCreatProduct(HttpServletRequest request, HttpServletResponse response) {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/products/create.jsp");
 
-
+//        Product product =new Product();
+//        request.setAttribute("product", product);
 
         try {
             dispatcher.forward(request,response);
@@ -82,7 +112,7 @@ public class ServletProduct extends HttpServlet {
                 break;
             case "delete" :
                 break;
-            case "find" :
+            case "detail" :
                 break;
 //            default :
 //                showAllProduct(request, response);
