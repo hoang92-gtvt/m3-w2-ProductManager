@@ -26,11 +26,12 @@ public class ServletProduct extends HttpServlet {
                  break;
              case "update":
                  showUpdateProduct(request, response);
-
                  break;
              case "delete" :
+                 alertDeleteProduct(request, response);
                  break;
              case "detail" :
+                 showDetailProduct(request,response);
                  break;
              default :
                  showAllProduct(request, response);
@@ -40,10 +41,48 @@ public class ServletProduct extends HttpServlet {
 //        System.out.println("inphuongthuc get");
     }
 
+    private void showDetailProduct(HttpServletRequest request, HttpServletResponse response) {
+        RequestDispatcher dispatcher;
+
+        int index = Integer.parseInt(request.getParameter("id"))-1;
+        Product product = productService.getProductByIndex(index);
+
+        request.setAttribute("product",product);
+        request.setAttribute("index", index);
+
+        if(product== null){
+            dispatcher= request.getRequestDispatcher("error-404.jsp");
+        } else {
+            dispatcher = request.getRequestDispatcher("/products/detail.jsp");
+        }
+
+
+        try {
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+
+    private void alertDeleteProduct(HttpServletRequest request, HttpServletResponse response) {
+
+            int index = Integer.parseInt(request.getParameter("id")) ;
+
+            productService.deleteProduct(index);
+            showAllProduct(request,response);
+
+    }
+
     private void showUpdateProduct(HttpServletRequest request, HttpServletResponse response) {
         RequestDispatcher dispatcher;
 
-        int index = Integer.parseInt(request.getParameter("index"));
+        int index = Integer.parseInt(request.getParameter("id"))-1;
         Product product = productService.getProductByIndex(index);
 
         request.setAttribute("product",product);
@@ -106,14 +145,15 @@ public class ServletProduct extends HttpServlet {
         }
         switch(action){
             case "create":
-                CreatProduct(request,response);
+                creatProduct(request,response);
                 break;
             case "update":
+                updateProduct(request, response);
                 break;
-            case "delete" :
-                break;
-            case "detail" :
-                break;
+//            case "delete" :
+//                break;
+//            case "detail" :
+//                break;
 //            default :
 //                showAllProduct(request, response);
 //                break;
@@ -121,7 +161,28 @@ public class ServletProduct extends HttpServlet {
         }
     }
 
-    private void CreatProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void updateProduct(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        int price = Integer.parseInt(request.getParameter("price"));
+        String description = request.getParameter("description");
+        String producer = request.getParameter("producer");
+
+        int index = id-1;
+
+        Product product = new Product(id, name, price, description, producer);
+
+        if(product==null){
+
+        }else{
+            productService.updateProduct(index, product);
+            showAllProduct(request,response);
+        }
+
+
+    }
+
+    private void creatProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");

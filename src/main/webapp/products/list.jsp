@@ -32,9 +32,9 @@
                 <td>${product.price}</td>
                 <td>${product.description}</td>
                 <td>${product.producer}</td>
-                <td><a href="products?action=update">edit</a></td>
-                <td><a href="products?action=delete">delele</a></td>
-                <td><a href="products?action=detail">detail</a></td>
+                <td><a href="products?action=update&id=${product.id}">edit</a></td>
+                <td><a href="products?action=delete&id=${product.id}">delele</a></td>
+                <td><a href="products?action=detail&id=${product.id}">detail</a></td>
             </tr>
 
         </c:forEach>
