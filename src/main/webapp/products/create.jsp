@@ -17,7 +17,7 @@
         <a href="/products?action=home">Quay về trang chủ</a>
 
         <form method="post">
-            <span>STT: <input name="id" type="text" size="15"/></span> <br>
+<%--            <span>STT: <input name="id" type="text" size="15"/></span> <br>--%>
             <span>Tên: <input name="name" type="text" size="15"/></span> <br>
             <span>Giá: <input name="price" type="text" size="15"/></span> <br>
             <span>Mô tả: <input name="description" type="text" size="15"/></span> <br>

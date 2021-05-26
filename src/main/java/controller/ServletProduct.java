@@ -3,6 +3,8 @@ package controller;
 import model.Product;
 import service.ProductService;
 import service.ProductSeviceImpl;
+import service.ProductSeviceJDBC;
+import service.checkID;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -11,8 +13,10 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "ServletProduct", value = "/products")
-public class ServletProduct extends HttpServlet {
-    ProductService productService = new ProductSeviceImpl();
+ public class ServletProduct extends HttpServlet {
+//    ProductService productService = new ProductSeviceImpl();
+    ProductService productService = new ProductSeviceJDBC();
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -72,9 +76,11 @@ public class ServletProduct extends HttpServlet {
 
     private void alertDeleteProduct(HttpServletRequest request, HttpServletResponse response) {
 
-            int index = Integer.parseInt(request.getParameter("id")) ;
+        int index = Integer.parseInt(request.getParameter("id")) ;
+//        boolean check = ((checkID)productService).checkID("123");
 
             productService.deleteProduct(index);
+
             showAllProduct(request,response);
 
     }
@@ -82,11 +88,12 @@ public class ServletProduct extends HttpServlet {
     private void showUpdateProduct(HttpServletRequest request, HttpServletResponse response) {
         RequestDispatcher dispatcher;
 
-        int index = Integer.parseInt(request.getParameter("id"))-1;
+        int index = Integer.parseInt(request.getParameter("id"));
+
         Product product = productService.getProductByIndex(index);
 
         request.setAttribute("product",product);
-        request.setAttribute("index", index);
+
 
         if(product== null){
             dispatcher= request.getRequestDispatcher("error-404.jsp");
@@ -162,20 +169,25 @@ public class ServletProduct extends HttpServlet {
     }
 
     private void updateProduct(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
+
+        int index = Integer.parseInt(request.getParameter("id"));
+        // không khai báo trong fromEdit tuy nhiên "id" đã tồn tại trên url
+
         String name = request.getParameter("name");
         int price = Integer.parseInt(request.getParameter("price"));
         String description = request.getParameter("description");
         String producer = request.getParameter("producer");
 
-        int index = id-1;
+//
 
-        Product product = new Product(id, name, price, description, producer);
+        Product product = new Product( name, price, description, producer);
 
         if(product==null){
-
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/error-404");
         }else{
+
             productService.updateProduct(index, product);
+
             showAllProduct(request,response);
         }
 
@@ -184,13 +196,13 @@ public class ServletProduct extends HttpServlet {
 
     private void creatProduct(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        int id = Integer.parseInt(request.getParameter("id"));
+//        int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         int price = Integer.parseInt(request.getParameter("price"));
         String description = request.getParameter("description");
         String producer = request.getParameter("producer");
 
-        Product product = new Product(id,name,price, description, producer);
+        Product product = new Product(name,price, description, producer);
 
         productService.creatProduct(product);
 

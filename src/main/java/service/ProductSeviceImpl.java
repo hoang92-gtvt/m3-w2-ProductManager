@@ -4,7 +4,7 @@ import model.Product;
 
 import java.util.ArrayList;
 
-public class ProductSeviceImpl implements ProductService{
+public class ProductSeviceImpl implements ProductService, checkID{
     private static ArrayList<Product> productList;
     static {
         productList = new ArrayList<>();
@@ -56,7 +56,14 @@ public class ProductSeviceImpl implements ProductService{
 
     }
 
+    @Override
+    public Product getProdcutByID(int id) {
+        return null;
+    }
 
 
-
+    @Override
+    public boolean checkID(String id) {
+        return false;
+    }
 }

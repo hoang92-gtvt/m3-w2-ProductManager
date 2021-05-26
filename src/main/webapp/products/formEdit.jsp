@@ -17,7 +17,7 @@
         <h1>Form Edit Product</h1>
         <a href="products?action=home">Quay trở về trang chủ</a>
         <form method ="post">
-        <span>STT<input type="text" name="id" value="${product.id}"/></span><br>
+<%--        <span>STT<input type="text" name="id" value="${product.id}"/></span><br>--%>
         <span>Tên<input type="text" name="name" value="${product.name}"/></span><br>
         <span>Giá<input type="text" name="price" value="${product.price}"/></span><br>
         <span>Mô Tả<input type="text" name="description" value="${product.description}"/></span><br>
