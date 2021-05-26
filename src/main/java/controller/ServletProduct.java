@@ -48,7 +48,7 @@ import java.util.List;
     private void showDetailProduct(HttpServletRequest request, HttpServletResponse response) {
         RequestDispatcher dispatcher;
 
-        int index = Integer.parseInt(request.getParameter("id"))-1;
+        int index = Integer.parseInt(request.getParameter("id"));
         Product product = productService.getProductByIndex(index);
 
         request.setAttribute("product",product);
